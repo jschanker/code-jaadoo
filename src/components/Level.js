@@ -27,7 +27,7 @@ export default function Level({ spells, setClearedLevel }) {
   React.useEffect(() => {
     if (level != undefined) {
       console.log(`level${level}.json`);
-      fetch(`/level${level}.json`)
+      fetch(`/codejaadoo/level${level}.json`)
         .then((res) => res.json())
         .then((data) => setProblemData(data));
     }
