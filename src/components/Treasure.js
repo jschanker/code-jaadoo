@@ -2,7 +2,6 @@ import React from "react";
 import SpellsList from "./SpellsList";
 import CodeSnippetRunner from "./CodeSnippetRunner";
 import { useParams } from "react-router-dom";
-import closedTreasureChest from "../assets/closed-treasure-chest.png";
 import { HashLink } from "react-router-hash-link";
 import closedTreasureChest from "../assets/closed-treasure-chest.png";
 import openTreasureChestGold from "../assets/open-treasure-chest-gold.svg.png";
