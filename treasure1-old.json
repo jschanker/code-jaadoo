@@ -1,0 +1,8 @@
+{
+  "type": "treasure",
+  "description": "This is a magic container that can store values of any kind.",
+  "openedHeading": "The Variable Container Spell",
+  "closedHeading": "Continue your journey with your next spell!",
+  "treasure": "variable",
+  "usage": "let container = 42"
+}

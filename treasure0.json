@@ -1,0 +1,9 @@
+{
+  "type": "treasure",
+  "description": "You can use this print spell to display text on the screen.",
+  "openedHeading": "Begin your coding journey with your first spell!",
+  "closedHeading": "Begin your coding journey with your first spell!",
+  "treasure": "print",
+  "usage": "print(\"I learned my first spell!\")",
+  "output": "I learned my first spell!"
+}

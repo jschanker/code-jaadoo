@@ -1,0 +1,42 @@
+{
+  "type": "level",
+  "numToClear": 4,
+  "problems": [
+    {
+      "description": "Complete the code to greet the user with the following message: <pre>%1</pre>\n\n<h3>Code</h3><pre>_________\nprint(%2);</pre>",
+      "questionArgs": [
+        [
+          "Hi there!",
+          "I got this!",
+          "Where is my next spell?",
+          "I am ready for all challenges!",
+          "I am the most awesome wizard!"
+        ],
+        ["wizardGreeting", "wizardMessage", "wizardHi", "wizardSaying"]
+      ],
+      "answer": "let %2 = \"%1\"",
+      "answerArgs": [
+        ["%1", "%1", "%1", "%1", "%1"],
+        ["%2", "%2", "%2", "%2"]
+      ]
+    },
+    {
+      "description": "Using your variable replacement spell, complete the code to greet the user with the following message: <h3>Code</h3><pre>%1</pre>\n\n<h3>Code</h3><pre>let %2 = \"%1\";\n__________</pre>",
+      "questionArgs": [
+        [
+          "Hi there!",
+          "I got this!",
+          "Where is my next spell?",
+          "I am ready for all challenges!",
+          "I am the most awesome wizard!"
+        ],
+        ["wizardGreeting", "wizardMessage", "wizardHi", "wizardSaying"]
+      ],
+      "answer": "print(%2)",
+      "answerArgs": [
+        ["%1", "%1", "%1", "%1", "%1"],
+        ["%2", "%2", "%2", "%2"]
+      ]
+    }
+  ]
+}

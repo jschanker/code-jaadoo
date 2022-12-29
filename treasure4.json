@@ -1,0 +1,9 @@
+{
+  "type": "treasure",
+  "description": "You can use this spell to get a letter, number, punctuation mark, or any other symbol from text at a given position. NOTE: Positions start at 0.",
+  "openedHeading": "The Character Extraction Spell",
+  "closedHeading": "Continue your journey with your next spell!",
+  "treasure": "charAt",
+  "usage": "print(\"ABC-DEF\".charAt(3))",
+  "output": "-"
+}

@@ -1,0 +1,9 @@
+{
+  "type": "treasure",
+  "description": "You can use this spell to join text together",
+  "openedHeading": "The Join Text Spell",
+  "closedHeading": "Continue your journey with your next spell!",
+  "treasure": "+",
+  "usage": "print(\"Hi there, \" + \"Wizard!\")",
+  "output": "Hi there, Wizard!"
+}
