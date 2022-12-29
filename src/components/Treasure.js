@@ -12,7 +12,7 @@ export default function Treasure({ spells, setSpells, isOpened, setOpened }) {
   const [treasureData, setTreasureData] = React.useState(null);
   React.useEffect(() => {
     console.log(`/treasure${level}.json`);
-    fetch(`/treasure${level}.json`)
+    fetch(`/codejaadoo/treasure${level}.json`)
       .then((res) => res.json())
       .then((data) => setTreasureData(data));
   }, [level]);
