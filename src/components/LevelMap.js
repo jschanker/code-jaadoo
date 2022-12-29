@@ -1,6 +1,6 @@
 import React from "react";
 import closedTreasureChest from "../assets/closed-treasure-chest.png";
-import openTreasureChest from "../open-treasure-chest-empty.svg.png";
+import openTreasureChest from "../assets/open-treasure-chest-empty.svg.png";
 import lock from "../assets/lock.png";
 import wizard from "../assets/wizard-walking-forward.gif";
 import { HashLink } from "react-router-hash-link";
