@@ -69,6 +69,18 @@ export default function App() {
             }
           />
           <Route
+            path="/codejaadoo"
+            exact
+            element={
+              <Treasure
+                spells={spells}
+                setSpells={setSpells}
+                isOpened={isOpened}
+                setOpened={setClearedLevel}
+              />
+            }
+          />
+          <Route
             path="/map"
             exact
             element={
