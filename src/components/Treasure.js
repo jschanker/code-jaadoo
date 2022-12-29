@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import closedTreasureChest from "../assets/closed-treasure-chest.png";
 import { HashLink } from "react-router-hash-link";
 import closedTreasureChest from "../assets/closed-treasure-chest.png";
-import openTreasureChestGold from "../open-treasure-chest-gold.svg.png";
+import openTreasureChestGold from "../assets/open-treasure-chest-gold.svg.png";
 
 export default function Treasure({ spells, setSpells, isOpened, setOpened }) {
   const { level = 0 } = useParams();
