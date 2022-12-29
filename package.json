@@ -1,11 +1,8 @@
 {
-  "name": "react",
-  "version": "1.0.0",
-  "description": "React example starter project",
-  "keywords": [
-    "react",
-    "starter"
-  ],
+  "name": "codejaadoo",
+  "version": "0.1.0",
+  "description": "Code Jaadoo Alpha version",
+  "homepage": "https://jschanker.github.io/codejaadoo",
   "main": "src/index.js",
   "dependencies": {
     "react": "18.2.0",
@@ -13,10 +10,6 @@
     "react-router-dom": "6.6.1",
     "react-router-hash-link": "2.4.3",
     "react-scripts": "4.0.0"
-  },
-  "devDependencies": {
-    "@babel/runtime": "7.13.8",
-    "typescript": "4.1.3"
   },
   "scripts": {
     "start": "react-scripts start",
