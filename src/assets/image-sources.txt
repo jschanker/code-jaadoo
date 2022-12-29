@@ -1,0 +1,23 @@
+Public domain Image sources
+===========================
+* closed-treasure-chest.png
+ * Image source: https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Treasure-chest.svg/229px-Treasure-chest.svg.png?20100801044926
+ * Description: https://commons.wikimedia.org/wiki/File:Treasure-chest.svg
+ * Author: mystica - http://www.openclipart.org/user-detail/mystica
+* open-treasure-chest-empty.svg.png
+  * Image source: https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Treasure_chest.svg/640px-Treasure_chest.svg.png
+  * Description: https://commons.wikimedia.org/wiki/File:Treasure_chest.svg
+  * Author: badaman - http://www.openclipart.org/user-detail/badaman
+* open-treasure-chest-gold.svg.png: 
+  * Image source: https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Treasurchest.svg/640px-Treasurchest.svg.png
+  * Description: https://commons.wikimedia.org/wiki/File:Treasurchest.svg
+  * Author" hextrust - http://www.openclipart.org/user-detail/hextrust
+* wizard-walking-forward.gif 
+  * Thumbnail Image source: https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Wizard-Forwardv3.gif/53px-Wizard-Forwardv3.gif?20210319022645
+  * Image source: https://upload.wikimedia.org/wikipedia/commons/1/10/Wizard-Forwardv3.gif
+  * Description: https://commons.wikimedia.org/wiki/File:Wizard-Forwardv3.gif
+  * Author: Kurt Kaiser
+* lock.png 
+  * Image source: https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Lock-dynamic-premium.png/640px-Lock-dynamic-premium.png
+  * Description: https://commons.wikimedia.org/wiki/File:Lock-dynamic-premium.png
+  * Author: Vijay Verma

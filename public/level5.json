@@ -1,0 +1,23 @@
+{
+  "numToClear": 5,
+  "problems": [
+    {
+      "description": "Use the character extraction spell to get the last symbol in the text: <pre>%1</pre>\n\n<h3>Code</h3><pre>\nprint(\"%1\".____________);</pre>",
+      "questionArgs": [["Hi!", "Who am I?", "FEED ME", "Code play"]],
+      "answer": "charAt(%1)",
+      "answerArgs": [[2, 8, 6, 8]]
+    },
+    {
+      "description": "Use the print and character extraction spells to get and display the last symbol in a %1-letter word entered by the user: <pre>let %2 = prompt(\"Enter a %1-letter word\");\n</pre>",
+      "questionArgs": [
+        [3, 4, 5, 6, 7, 8],
+        ["s", "word", "t", "enteredWord", "enteredText"]
+      ],
+      "answer": "print(%2.charAt(%1))",
+      "answerArgs": [
+        [2, 3, 4, 5, 6, 7],
+        ["%2", "%2", "%2", "%2", "%2"]
+      ]
+    }
+  ]
+}

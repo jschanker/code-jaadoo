@@ -1,0 +1,9 @@
+{
+  "type": "treasure",
+  "description": "You can use this spell to ask users questions and get their answers.",
+  "openedHeading": "The Input Spell",
+  "closedHeading": "Continue your journey with your next spell!",
+  "treasure": "prompt",
+  "usage": "print(prompt(\"What is your favorite color?\"))",
+  "output": "green (or whatever the user enters)"
+}

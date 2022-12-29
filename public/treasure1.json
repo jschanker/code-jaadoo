@@ -1,0 +1,9 @@
+{
+  "type": "treasure",
+  "description": "You can use this spell to refer to a value by some name of your choosing.",
+  "openedHeading": "The Variable Replacement Spell",
+  "closedHeading": "Continue your journey with your next spell!",
+  "treasure": "let ",
+  "usage": "let wizardName = \"The best wizard\";\nprint(wizardName)",
+  "output": "The best wizard"
+}

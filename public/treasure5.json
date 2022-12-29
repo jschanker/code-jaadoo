@@ -1,0 +1,9 @@
+{
+  "type": "treasure",
+  "description": "You can use this spell to get the number of characters in text (counting starts with 1)",
+  "openedHeading": "The Counting Characters Spell",
+  "closedHeading": "Continue your journey with your next spell!",
+  "treasure": "length",
+  "usage": "print(\"ABC-DEF\".length)",
+  "output": 7
+}
