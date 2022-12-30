@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import closedTreasureChest from "../assets/closed-treasure-chest.png";
 import openTreasureChest from "../assets/open-treasure-chest-empty.svg.png";
 import lock from "../assets/lock.png";
@@ -30,9 +30,8 @@ export default function LevelMap({ currentLevel, levels, spells }) {
               position: "fixed",
               width: "100%",
               /*minHeight: "100px",*/
-              backgroundColor: "rgba(0, 0, 255, 0.75)",
-              borderRadius: "20px",
-              padding: "50px 0"
+              backgroundColor: "rgba(127, 127, 255, 0.75)",
+              borderRadius: "20px"
             }}
           >
             <HashLink
@@ -41,7 +40,13 @@ export default function LevelMap({ currentLevel, levels, spells }) {
                   ? `treasure/${selectedLevel.num}`
                   : `level/${selectedLevel.num}`
               }`}
-              style={{ color: "black", textDecoration: "none" }}
+              style={{
+                color: "black",
+                textDecoration: "none",
+                display: "flex",
+                justifyContent: "center",
+                padding: "50px 0"
+              }}
             >
               {selectedLevel.type === "treasure"
                 ? `Click to collect treasure`
@@ -111,33 +116,45 @@ export default function LevelMap({ currentLevel, levels, spells }) {
         />
       </div>
       {remainingLevels.map((level, index) => (
-        <div
+        <div 
           style={{
-            borderRadius: "30px",
-            width: "50px",
-            height: "50px",
-            backgroundColor: "#dddddd",
-            textAlign: "center",
-            marginLeft: "auto",
-            marginRight: "auto",
-            marginTop: "10px"
-          }}
-          id={level.index}
-          onClick={(e) => {
-            console.log(e.currentTarget.id);
-            setSelectedLevel(level);
-            e.stopPropagation();
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center"
           }}
         >
-          {level.type === "treasure" ? (
-            <img
-              src={closedTreasureChest}
-              width="40"
-              alt="open treasure chest"
-            />
-          ) : (
-            <span>{`Level ${level?.num}`}</span>
-          )}
+          <div style={{ fontWeight:"bold", color:"#084" }}>
+            {index === 0 && "Click to proceed ➡️"}
+          </div>
+          <div
+            style={{
+              borderRadius: "30px",
+              width: "50px",
+              height: "50px",
+              backgroundColor: "#dddddd",
+              textAlign: "center",
+              marginTop: "10px"
+            }}
+            id={level.index}
+            onClick={(e) => {
+              console.log(e.currentTarget.id);
+              setSelectedLevel(level);
+              e.stopPropagation();
+            }}
+          >
+            {level.type === "treasure" ? (
+              <img
+                src={closedTreasureChest}
+                width="40"
+                alt="open treasure chest"
+              />
+            ) : (
+              <span>{`Level ${level?.num}`}</span>
+            )}
+          </div>
+          <div style={{ fontWeight:"bold", color:"#084" }}>
+            {index === 0 && "⬅️ Click to proceed"}
+          </div>
         </div>
       ))}
       <HashLink to="/">Go back</HashLink>
