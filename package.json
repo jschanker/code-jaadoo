@@ -2,7 +2,7 @@
   "name": "codejaadoo",
   "version": "0.1.0",
   "description": "Code Jaadoo Alpha version",
-  "homepage": "https://jschanker.github.io/codejaadoo",
+  "homepage": "https://codejaadoo.com",
   "main": "src/index.js",
   "dependencies": {
     "react": "18.2.0",
