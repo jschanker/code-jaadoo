@@ -3,7 +3,7 @@
   "numToClear": 3,
   "problems": [
     {
-      "description": "Greet the user with the following message: <pre>%1</pre>",
+      "description": "Greet the user with the following message: <codeButton>%1</codeButton>",
       "questionArgs": [
         [
           "Hi there!",

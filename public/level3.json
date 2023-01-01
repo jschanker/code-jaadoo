@@ -2,9 +2,9 @@
   "numToClear": 3,
   "problems": [
     {
-      "description": "Use the print and join text spells to display the result of joining the greeting %1 and the name referred to by %2 without using %3 in your answer: <pre>let %2 = \"%3\";<pre>\n_______________________________</pre>",
+      "description": "Use the print and join text spells to display the result of joining the greeting <codeButton>%1</codeButton> and the name referred to by <codeButton>%2</codeButton> without using %3 in your answer: <pre>let %2 = \"%3\";<pre>\n_______________________________</pre>",
       "questionArgs": [
-        ["Hi,", "Hey,", "Welcome,", "Yo,"],
+        ["Hi ", "Hey ", "Welcome ", "Yo "],
         ["wizardName", "firstName", "awesomeName", "radName"],
         ["Gandalf", "Merlin", "Harry", "Rincewind"]
       ],

@@ -3,6 +3,11 @@ import { useParams } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import SpellsList from "./SpellsList";
 
+import React from "react";
+import { useParams } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
+import SpellsList from "./SpellsList";
+
 const normalizeAnswer = (answer) => answer.replace(/\s\s+/g, " ");
 const repeatCharTimes = (c, times) => Array(times).fill(c).join("");
 
@@ -24,6 +29,8 @@ export default function Level({ spells, setClearedLevel }) {
   const [questionArgIndices, setQuestionArgIndices] = React.useState([]);
   const [currentAnswer, setCurrentAnswer] = React.useState("");
   const [gotHint, setGotHint] = React.useState(false);
+  const [currentStreak, setCurrentStreak] = React.useState(0);
+
   React.useEffect(() => {
     if (level != undefined) {
       console.log(`level${level}.json`);
@@ -72,6 +79,15 @@ export default function Level({ spells, setClearedLevel }) {
     );
   const expectedAnswerNormal = normalizeAnswer(expectedAnswer);
   const currentAnswerNormal = normalizeAnswer(currentAnswer);
+  const handleCodeButtonClick = (code) => {
+    //const code = e.target.value?.replace(/\r|\n/g, "");
+    // const singleLineCode = e.target.value?.replace(/\r|\n/g, "");
+    setCurrentAnswer(
+      currentAnswer.endsWith(code)
+        ? currentAnswer.slice(0, -code.length)
+        : currentAnswer + code
+    );
+  };
   const description = problemInfo.description
     .replace(
       /%([0-9]+)/g,
@@ -93,7 +109,27 @@ export default function Level({ spells, setClearedLevel }) {
             .split(/<h3>|<\/h3>/g)
             .map((item, index) => (index % 2 === 0 ? item : <h3>{item}</h3>))
         : item
+    )
+    .flat()
+    .map((item, index) =>
+      typeof item === "string"
+        ? item
+            .split(/<codeButton>|<\/codeButton>/g)
+            .map((item, index) =>
+              index % 2 === 0 ? (
+                item
+              ) : (
+                <button
+                  onClick={(e) => handleCodeButtonClick(e.target.innerText)}
+                >
+                  {item}
+                </button>
+              )
+            )
+        : item
     );
+
+  // React.useEffect(() => console.log(description), []);
 
   React.useEffect(() => {
     // const expectedAnswerNormal = normalizeAnswer(expectedAnswer);
@@ -101,15 +137,27 @@ export default function Level({ spells, setClearedLevel }) {
     const answerInput = document.getElementById("answer");
 
     if (answerInput) {
-      if (expectedAnswerNormal === currentAnswerNormal) {
+      answerInput.focus();
+      // Adapted from https://stackoverflow.com/a/48460773
+      //   - 40 is for 20px top/bottom padding
+      answerInput.style.height = "";
+      answerInput.style.height = answerInput.scrollHeight - 40 + "px";
+      if (
+        expectedAnswerNormal &&
+        expectedAnswerNormal === currentAnswerNormal
+      ) {
         answerInput.style.backgroundColor = "green";
         setTimeout(() => {
           setIsCorrect(true);
           setCurrentAnswer("");
           answerInput.style.backgroundColor = "";
+          if (!gotHint) {
+            setCurrentStreak(currentStreak + 1);
+          }
         }, 1000);
       } else if (!expectedAnswerNormal.startsWith(currentAnswerNormal)) {
         answerInput.style.backgroundColor = "red";
+        setCurrentStreak(0);
       } else {
         answerInput.style.backgroundColor = "";
       }
@@ -121,58 +169,45 @@ export default function Level({ spells, setClearedLevel }) {
       <SpellsList
         spells={spells}
         handler={(item) => {
-          setCurrentAnswer(currentAnswer + item);
+          // setCurrentAnswer(currentAnswer + item);
+          handleCodeButtonClick(item);
         }}
       />
       {numRemaining > 0 ? (
         <>
           <h2>Number of Questions Remaining to Level Up: {numRemaining}</h2>
           {description}
-          <br />
-          <button
-            onClick={() => {
-              const expectedAnswerNormal = normalizeAnswer(expectedAnswer);
-              const actualAnswerNormal = normalizeAnswer(currentAnswer);
-              const indexOfDivergence = Array.from(
-                expectedAnswerNormal
-              ).findIndex((c, index) => c !== actualAnswerNormal[index]);
-
-              if (indexOfDivergence !== -1) {
-                setCurrentAnswer(
-                  expectedAnswerNormal.substring(0, indexOfDivergence + 2)
-                );
-                setNumRemaining(numRemaining + 1);
-              }
-            }}
-            style={{ marginRight: "5px" }}
-          >
-            Fix current answer and 2 character hint (+1 problem to solve)
-          </button>
-          <button
-            onClick={() => {
-              setShowAnswer(!showAnswer);
-              setGotHint(true);
-              if (!gotHint) {
-                setNumRemaining(numRemaining + 3);
-              }
-            }}
-          >
-            Click to{" "}
-            {showAnswer ? "hide answer" : "show answer (+3 problems to solve)"}
-          </button>
-          <div style={{ display: showAnswer ? "block" : "none" }}>
-            {expectedAnswer}
-          </div>
-          <br />
-          <br />
           <label>
-            Answer:&nbsp;
-            <input
+            <h3>Answer:&nbsp;</h3>
+            <textarea
               id="answer"
               value={currentAnswer}
-              size={50}
-              style={{ maxWidth: "100%" }}
+              cols={40}
+              rows={1}
+              style={{
+                maxWidth: "95%",
+                //background:
+                //  "url('https://upload.wikimedia.org/wikipedia/commons/3/36/Fire-animation.gif')",
+                //backgroundSize: "contain",
+                backgroundImage: currentStreak >= 3 && "url('/fire.gif')",
+                backgroundSize: "10% 20px",
+                //backgroundPosition: "bottom",
+                //backgroundRepeat: "no-repeat",
+                backgroundRepeat: "repeat-x",
+                backgroundPosition: "100% 100%",
+                //backgroundRepeat: "no-repeat",
+                fontSize: "xx-large",
+                fontWeight: "bold",
+                //color: "green",
+                padding: "20px 5px",
+                fontFamily: "courier, monospace",
+                resize: "none",
+                borderRadius: "10px"
+              }}
               onChange={(e) => {
+                //console.log(e.target.style.height);
+                //e.target.style.height = "";
+                //e.target.style.height = e.target.scrollHeight - 40 + "px";
                 /*
                 const expectedAnswerNormal = expectedAnswer.replace(
                   /\s\s+/g,
@@ -200,8 +235,51 @@ export default function Level({ spells, setClearedLevel }) {
                 */
                 setCurrentAnswer(e.target.value);
               }}
+              autoFocus
             />
           </label>
+          <br />
+          <br />
+          <button
+            onClick={() => {
+              const expectedAnswerNormal = normalizeAnswer(expectedAnswer);
+              const actualAnswerNormal = normalizeAnswer(currentAnswer);
+              const indexOfDivergence = Array.from(
+                expectedAnswerNormal
+              ).findIndex((c, index) => c !== actualAnswerNormal[index]);
+
+              if (indexOfDivergence !== -1) {
+                setCurrentAnswer(
+                  expectedAnswerNormal.substring(0, indexOfDivergence + 2)
+                );
+                setNumRemaining(numRemaining + 1);
+              }
+              setCurrentStreak(0);
+            }}
+            style={{ marginRight: "5px" }}
+          >
+            Fix current answer and 2 character hint (+1 problem to solve)
+          </button>
+          <br />
+          <br />
+          <button
+            onClick={() => {
+              setShowAnswer(!showAnswer);
+              setGotHint(true);
+              if (!gotHint) {
+                setNumRemaining(numRemaining + 3);
+                setCurrentStreak(0);
+              }
+            }}
+          >
+            Click to{" "}
+            {showAnswer ? "hide answer" : "show answer (+3 problems to solve)"}
+          </button>
+          <div style={{ display: showAnswer ? "block" : "none" }}>
+            {expectedAnswer}
+          </div>
+          <br />
+          <br />
           <p>
             <HashLink
               to="/map"
@@ -224,3 +302,4 @@ export default function Level({ spells, setClearedLevel }) {
     </div>
   );
 }
+
