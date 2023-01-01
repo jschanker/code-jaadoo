@@ -3,7 +3,7 @@
   "numToClear": 4,
   "problems": [
     {
-      "description": "Complete the code to greet the user with the following message: <codeButton>%1</codeButton>\n\n<h3>Code</h3><pre>_________\nprint(%2);</pre>",
+      "description": "Complete the code to greet the user with the message <codeButton>%1</codeButton> stored in the variable <codeButton>%2</codeButton>: \n\n<h3>Code</h3><pre>_________\nprint(%2);</pre>",
       "questionArgs": [
         [
           "Hi there!",
@@ -21,7 +21,7 @@
       ]
     },
     {
-      "description": "Using your variable replacement spell, complete the code to greet the user with the following message: <h3>Code</h3><codeButton>%1</codeButton>\n\n<h3>Code</h3><pre>let %2 = \"%1\";\n__________</pre>",
+      "description": "Using your variable replacement spell, complete the code to greet the user with the message %1 stored in the variable <codeButton>%2</codeButton>\n\n<h3>Code</h3><pre>let %2 = \"%1\";\n__________</pre>",
       "questionArgs": [
         [
           "Hi there!",

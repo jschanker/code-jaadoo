@@ -2,7 +2,7 @@
   "numToClear": 5,
   "problems": [
     {
-      "description": "Use the character extraction spell to get the last symbol in the text: <codeButton>%1</codeButton>\n\n<h3>Code</h3><pre>\nprint(\"%1\".____________);</pre>",
+      "description": "Use the character extraction spell to get the last symbol in the text: <pre>%1</pre>\n\n<h3>Code</h3><pre>\nprint(\"%1\".____________);</pre>",
       "questionArgs": [["Hi!", "Who am I?", "FEED ME", "Code play"]],
       "answer": "charAt(%1)",
       "answerArgs": [[2, 8, 6, 8]]
