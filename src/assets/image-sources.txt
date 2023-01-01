@@ -21,3 +21,7 @@ Public domain Image sources
   * Image source: https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Lock-dynamic-premium.png/640px-Lock-dynamic-premium.png
   * Description: https://commons.wikimedia.org/wiki/File:Lock-dynamic-premium.png
   * Author: Vijay Verma
+* fire.gif
+ * Image source (original before cropping): https://upload.wikimedia.org/wikipedia/commons/3/36/Fire-animation.gif
+ * Description: https://commons.wikimedia.org/wiki/File:Fire-animation.gif
+ * Author Nevit - https://commons.wikimedia.org/wiki/User:Nevit

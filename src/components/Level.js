@@ -3,11 +3,6 @@ import { useParams } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import SpellsList from "./SpellsList";
 
-import React from "react";
-import { useParams } from "react-router-dom";
-import { HashLink } from "react-router-hash-link";
-import SpellsList from "./SpellsList";
-
 const normalizeAnswer = (answer) => answer.replace(/\s\s+/g, " ");
 const repeatCharTimes = (c, times) => Array(times).fill(c).join("");
 
