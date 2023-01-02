@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { useParams } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import SpellsList from "./SpellsList";
@@ -8,6 +8,18 @@ const repeatCharTimes = (c, times) => Array(times).fill(c).join("");
 
 export default function Level({ spells, setClearedLevel }) {
   let { level } = useParams();
+  const tutorialDirections = [
+    "",
+    "Click on a spell once to add its text to your answer.",
+    "You can also click on buttons in the problems to add their text. Uh oh! The answer box turned red. This means it's not correct.",
+    "No worries, we can click on the button again to remove this code.",
+    "Let's type in a space and quotes in the input. Still red.",
+    "OK, let's get a hint. Click on this button to remove all incorrect code and find out the next two symbols. This means we'll have to answer one more problem. Oh well, more practice for our wizard.",
+    "That's right, we forgot the open parenthesis.",
+    "Let's now click on the button again to reinstate the text.",
+    "Finally, let's add the remaining quotation marks and closing parenthesis to complete our answer. Yay, it turned green and the text disappeared, so this means we were correct!",
+    "That's all there is to it. Type in code and use the buttons to add code as you please. You can also get the full answer by clicking this button. But this means three more problems to solve."
+  ];
   const [problemData, setProblemData] = React.useState({
     type: "foo",
     problems: [
@@ -25,7 +37,32 @@ export default function Level({ spells, setClearedLevel }) {
   const [currentAnswer, setCurrentAnswer] = React.useState("");
   const [gotHint, setGotHint] = React.useState(false);
   const [currentStreak, setCurrentStreak] = React.useState(0);
+  const [tutorialStep, setTutorialStep] = React.useState(level === "1" ? 1 : 0);
+  const [pointerPosition, setPointerPosition] = React.useState({ x: 0, y: 0 });
+  const selectedElement = React.useRef(null);
 
+  React.useEffect(() => {
+    if (selectedElement.current) {
+      handleCodeButtonClick(
+        selectedElement.current.innerText,
+        selectedElement.current
+      );
+    }
+  }, [selectedElement, tutorialStep]);
+
+  /*
+  React.useEffect(() => {
+    if (problemData.problems.length > 0 && tutorialStep === 1) {
+      //document.body.//appendChild("<div👆
+      setTimeout(
+        () =>
+          (document.getElementById("tutorial-directions").style.width =
+            "500px"),
+        5000
+      );
+    }
+  }, [problemData, tutorialStep]);
+*/
   React.useEffect(() => {
     if (level != undefined) {
       console.log(`level${level}.json`);
@@ -74,14 +111,31 @@ export default function Level({ spells, setClearedLevel }) {
     );
   const expectedAnswerNormal = normalizeAnswer(expectedAnswer);
   const currentAnswerNormal = normalizeAnswer(currentAnswer);
-  const handleCodeButtonClick = (code) => {
+  const handleCodeButtonClick = (code, ele) => {
     //const code = e.target.value?.replace(/\r|\n/g, "");
     // const singleLineCode = e.target.value?.replace(/\r|\n/g, "");
-    setCurrentAnswer(
-      currentAnswer.endsWith(code)
-        ? currentAnswer.slice(0, -code.length)
-        : currentAnswer + code
-    );
+    if (tutorialStep && ele?.getBoundingClientRect()) {
+      setPointerPosition({
+        x:
+          ele.getBoundingClientRect().x + ele.getBoundingClientRect().width / 2,
+        y:
+          ele.getBoundingClientRect().y + ele.getBoundingClientRect().height / 2
+      });
+    }
+    if (tutorialStep !== 4 && tutorialStep !== 5 && tutorialStep < 8) {
+      setCurrentAnswer(
+        currentAnswer.endsWith(code)
+          ? currentAnswer.slice(0, -code.length)
+          : currentAnswer + code
+      );
+    } else if (tutorialStep === 4) {
+      setCurrentAnswer(currentAnswer + ' "');
+    } else if (tutorialStep === 5) {
+      console.log("5", tutorialStep);
+      setCurrentAnswer(currentAnswer.slice(0, -2) + '("');
+    } else if (tutorialStep === 8) {
+      setCurrentAnswer(currentAnswer + '")');
+    }
   };
   const description = problemInfo.description
     .replace(
@@ -108,19 +162,31 @@ export default function Level({ spells, setClearedLevel }) {
     .flat()
     .map((item, index) =>
       typeof item === "string"
-        ? item
-            .split(/<codeButton>|<\/codeButton>/g)
-            .map((item, index) =>
-              index % 2 === 0 ? (
-                item
-              ) : (
-                <button
-                  onClick={(e) => handleCodeButtonClick(e.target.innerText)}
-                >
-                  {item}
-                </button>
-              )
+        ? item.split(/<codeButton>|<\/codeButton>/g).map((item, index) =>
+            index % 2 === 0 ? (
+              item
+            ) : (
+              <button
+                onClick={(e) =>
+                  handleCodeButtonClick(e.target.innerText, e.target)
+                }
+                ref={
+                  tutorialStep === 2 ||
+                  tutorialStep === 3 ||
+                  tutorialStep ===
+                    7 /*&&
+                  expectedAnswerNormal
+                    .substring(currentAnswerNormal.length)
+                    .startsWith(item) &&
+                  !currentAnswer.endsWith(item)*/
+                    ? selectedElement
+                    : null
+                }
+              >
+                {item}
+              </button>
             )
+          )
         : item
     );
 
@@ -157,17 +223,72 @@ export default function Level({ spells, setClearedLevel }) {
         answerInput.style.backgroundColor = "";
       }
     }
-  }, [currentAnswerNormal, expectedAnswerNormal]);
+  }, [currentAnswerNormal, expectedAnswerNormal, tutorialStep]);
 
   return (
     <div style={{ marginTop: "45px" }}>
       <SpellsList
         spells={spells}
-        handler={(item) => {
+        setClicked={
+          tutorialStep === 1 &&
+          ((item) =>
+            expectedAnswerNormal.startsWith(item) &&
+            !currentAnswer.endsWith(item))
+        }
+        handler={(item, e) => {
           // setCurrentAnswer(currentAnswer + item);
-          handleCodeButtonClick(item);
+          handleCodeButtonClick(item, e.target);
         }}
       />
+      {tutorialStep > 0 ? (
+        <div
+          style={{
+            position: "absolute",
+            top: pointerPosition.y,
+            left: pointerPosition.x - 10,
+            textAlign: "left"
+          }}
+        >
+          <span role="img" ariaLabel="pointer" style={{ fontSize: "xx-large" }}>
+            👆
+          </span>
+          <div
+            id="tutorial-directions"
+            style={{
+              backgroundColor: "rgb(255, 255, 205, 1)",
+              /*width: "100%",*/
+              maxWidth: "100px",
+              minHeight: "50px",
+              overflow: "hidden",
+              position: "relative",
+              //right: "50px"
+              left: "10px",
+              top: "-10px",
+              padding: "5px",
+              transition: "1s"
+            }}
+          >
+            {tutorialDirections[tutorialStep]}
+            <button
+              onClick={() =>
+                setTutorialStep((tutorialStep + 1) % tutorialDirections.length)
+              }
+              style={{
+                marginTop: "20px",
+                fontWeight: "strong",
+                display: "block"
+              }}
+            >
+              Click{" "}
+              {tutorialStep < tutorialDirections.length - 1
+                ? "for the next step"
+                : "to finish"}
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
       {numRemaining > 0 ? (
         <>
           <h2>Number of Questions Remaining to Level Up: {numRemaining}</h2>
@@ -176,9 +297,15 @@ export default function Level({ spells, setClearedLevel }) {
             <h3>Answer:&nbsp;</h3>
             <textarea
               id="answer"
+              readOnly={tutorialStep !== 0}
               value={currentAnswer}
               cols={40}
               rows={1}
+              ref={
+                tutorialStep === 4 || tutorialStep === 8
+                  ? selectedElement
+                  : null
+              }
               style={{
                 maxWidth: "95%",
                 //background:
@@ -228,7 +355,7 @@ export default function Level({ spells, setClearedLevel }) {
                   e.target.style.backgroundColor = "";
                 }
                 */
-                setCurrentAnswer(e.target.value);
+                setCurrentAnswer(e.target.value, e.target);
               }}
               autoFocus
             />
@@ -252,6 +379,7 @@ export default function Level({ spells, setClearedLevel }) {
               setCurrentStreak(0);
             }}
             style={{ marginRight: "5px" }}
+            ref={tutorialStep === 5 ? selectedElement : null}
           >
             Fix current answer and 2 character hint (+1 problem to solve)
           </button>
@@ -266,6 +394,7 @@ export default function Level({ spells, setClearedLevel }) {
                 setCurrentStreak(0);
               }
             }}
+            ref={tutorialStep === 9 ? selectedElement : null}
           >
             Click to{" "}
             {showAnswer ? "hide answer" : "show answer (+3 problems to solve)"}

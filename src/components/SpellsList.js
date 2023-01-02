@@ -1,4 +1,22 @@
-export default function SpellsList({ spells, handler }) {
+import React from "react";
+
+export default function SpellsList({ spells, handler, setClicked }) {
+  const selectedElement = React.useRef(null);
+  React.useEffect(() => {
+    if (setClicked && typeof setClicked === "function") {
+      spells.forEach(
+        (item) =>
+          setClicked(item) && handler(item, { target: selectedElement.current })
+      );
+    }
+  }, [setClicked, spells, handler, selectedElement]);
+  /*
+  React.useEffect(() => {
+    if (typeof setClicked === "function") {
+      spells.forEach((item) => setClicked(item) && handler(item, null));
+    }
+  }, [setClicked, spells, handler]);
+  */
   return (
     <div
       style={{
@@ -17,6 +35,11 @@ export default function SpellsList({ spells, handler }) {
           <button
             onClick={(e) => handler && handler(item, e)}
             style={{ margin: "5px 5px" }}
+            ref={
+              typeof setClicked === "function" && setClicked(item)
+                ? selectedElement
+                : null
+            }
             key={item}
           >
             {item}
