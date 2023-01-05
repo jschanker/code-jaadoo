@@ -1,6 +1,6 @@
 import "./styles.css";
 
-export default function CodeSnippetRunner({ code }) {
+export default function CodeSnippetRunner({ code, runCallback }) {
   const printFunctionStr = `const print = (...items) => {
       Array.prototype.forEach.call(items, (item) => {
       if(item instanceof Array) {
@@ -19,7 +19,12 @@ export default function CodeSnippetRunner({ code }) {
   console.log(printFunctionStr + "\n" + code);
   return (
     <div id="code-runner">
-      <button onClick={() => eval(printFunctionStr + "\n" + code)}>
+      <button
+        onClick={() => {
+          eval(printFunctionStr + "\n" + code);
+          typeof runCallback === "function" && runCallback();
+        }}
+      >
         Run Code
       </button>
       <pre id="output"></pre>

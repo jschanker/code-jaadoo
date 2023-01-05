@@ -3,7 +3,7 @@
   "numToClear": 3,
   "problems": [
     {
-      "description": "Greet the user with the following message: <codeButton>%1</codeButton>",
+      "description": "Greet the user with the following message: %1",
       "questionArgs": [
         [
           "Hi there!",
@@ -14,6 +14,7 @@
         ]
       ],
       "answer": "print(\"%1\")",
+      "answerBlocks": ["print", "(", "\"", "%1", "\"", ")"],
       "answerArgs": [["%1", "%1", "%1", "%1", "%1"]]
     }
   ]

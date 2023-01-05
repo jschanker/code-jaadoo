@@ -2,6 +2,10 @@
 import { useParams } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import SpellsList from "./SpellsList";
+import _ from "lodash";
+// import ReactFitText from "react-fittext";
+// import AutosizeInput from "react-input-autosize";
+// import AnswerInput from "./AnswerInput";
 
 const normalizeAnswer = (answer) => answer.replace(/\s\s+/g, " ");
 const repeatCharTimes = (c, times) => Array(times).fill(c).join("");
@@ -35,13 +39,16 @@ export default function Level({ spells, setClearedLevel }) {
   const [problemNumber, setProblemNumber] = React.useState(0);
   const [questionArgIndices, setQuestionArgIndices] = React.useState([]);
   const [currentAnswer, setCurrentAnswer] = React.useState("");
+  const [answerBlockData, setAnswerBlockData] = React.useState([]);
   const [gotHint, setGotHint] = React.useState(false);
   const [currentStreak, setCurrentStreak] = React.useState(0);
-  const [tutorialStep, setTutorialStep] = React.useState(level === "1" ? 1 : 0);
+  // const [tutorialStep, setTutorialStep] = React.useState(level === "1" ? 1 : 0);
+  const [tutorialStep, setTutorialStep] = React.useState(0);
   const [pointerPosition, setPointerPosition] = React.useState({ x: 0, y: 0 });
   const selectedElement = React.useRef(null);
-
+  //console.log("SE", selectedElement, setClicked("print"));
   React.useEffect(() => {
+    console.log(selectedElement.current, "");
     if (selectedElement.current) {
       handleCodeButtonClick(
         selectedElement.current.innerText,
@@ -83,6 +90,24 @@ export default function Level({ spells, setClearedLevel }) {
     console.log("A", questionNumber, questionArgIndices);
     setProblemNumber(questionNumber);
     setQuestionArgIndices(questionArgIndices);
+    setAnswerBlockData(
+      _.shuffle(problemInfo?.answerBlocks || []).map(
+        (answerBlockItem, used) => {
+          return {
+            value: answerBlockItem
+              .replace(
+                /%([0-9]+)/g,
+                (_, a) => answerArgs[a - 1][questionArgIndices[a - 1]]
+              )
+              .replace(
+                /%([0-9]+)/g,
+                (_, a) => questionArgs[a - 1][questionArgIndices[a - 1]]
+              ),
+            used: false
+          };
+        }
+      )
+    );
     if (numRemaining === Infinity && problemData?.type !== "foo") {
       // loaded
       console.log(problemData);
@@ -114,13 +139,15 @@ export default function Level({ spells, setClearedLevel }) {
   const handleCodeButtonClick = (code, ele) => {
     //const code = e.target.value?.replace(/\r|\n/g, "");
     // const singleLineCode = e.target.value?.replace(/\r|\n/g, "");
-    if (tutorialStep && ele?.getBoundingClientRect()) {
+    if (tutorialStep > 0 && ele?.getBoundingClientRect()) {
       setPointerPosition({
         x:
           ele.getBoundingClientRect().x + ele.getBoundingClientRect().width / 2,
         y:
           ele.getBoundingClientRect().y + ele.getBoundingClientRect().height / 2
       });
+      ele.style.animation = "buttonBlink 500ms 5";
+      ele.style.backgroundColor = "rgb(239, 239, 239)";
     }
     if (tutorialStep !== 4 && tutorialStep !== 5 && tutorialStep < 8) {
       setCurrentAnswer(
@@ -170,6 +197,12 @@ export default function Level({ spells, setClearedLevel }) {
                 onClick={(e) =>
                   handleCodeButtonClick(e.target.innerText, e.target)
                 }
+                disabled={
+                  tutorialStep !== 0 &&
+                  tutorialStep !== 2 &&
+                  tutorialStep !== 3 &&
+                  tutorialStep !== 7
+                }
                 ref={
                   tutorialStep === 2 ||
                   tutorialStep === 3 ||
@@ -199,6 +232,10 @@ export default function Level({ spells, setClearedLevel }) {
 
     if (answerInput) {
       answerInput.focus();
+      answerInput.setSelectionRange(
+        answerInput.value.length,
+        answerInput.value.length
+      );
       // Adapted from https://stackoverflow.com/a/48460773
       //   - 40 is for 20px top/bottom padding
       answerInput.style.height = "";
@@ -227,6 +264,7 @@ export default function Level({ spells, setClearedLevel }) {
 
   return (
     <div style={{ marginTop: "45px" }}>
+      {/*
       <SpellsList
         spells={spells}
         setClicked={
@@ -240,6 +278,7 @@ export default function Level({ spells, setClearedLevel }) {
           handleCodeButtonClick(item, e.target);
         }}
       />
+      */}
       {tutorialStep > 0 ? (
         <div
           style={{
@@ -293,10 +332,10 @@ export default function Level({ spells, setClearedLevel }) {
         <>
           <h2>Number of Questions Remaining to Level Up: {numRemaining}</h2>
           {description}
-          <label>
+          <label style={{ display: "none" }}>
             <h3>Answer:&nbsp;</h3>
             <textarea
-              id="answer"
+              id="answerOld"
               readOnly={tutorialStep !== 0}
               value={currentAnswer}
               cols={40}
@@ -355,13 +394,38 @@ export default function Level({ spells, setClearedLevel }) {
                   e.target.style.backgroundColor = "";
                 }
                 */
-                setCurrentAnswer(e.target.value, e.target);
+                setCurrentAnswer(e.target.value);
               }}
               autoFocus
             />
           </label>
           <br />
           <br />
+          <AnswerInput
+            startInTextMode={false}
+            tutorialStep={tutorialStep}
+            currentAnswer={currentAnswer}
+            selectedElement={selectedElement}
+            answerBlockData={answerBlockData}
+            currentStreak={currentStreak}
+            setCurrentAnswer={setCurrentAnswer}
+            answer={expectedAnswer}
+            handleCodeButtonClick={handleCodeButtonClick}
+          />
+          {/*<div style={{ display: "flex", justifyContent: "space-around" }}>
+            {answerBlockData.map((item) => (
+              <button
+                onClick={(e) => {
+                  handleCodeButtonClick(item.value, e.target);
+                  item.used = true;
+                  //e.target.disabled = true;
+                }}
+                disabled={item.used}
+              >
+                {item.value}
+              </button>
+            ))}
+          </div>
           <button
             onClick={() => {
               const expectedAnswerNormal = normalizeAnswer(expectedAnswer);
@@ -380,9 +444,10 @@ export default function Level({ spells, setClearedLevel }) {
             }}
             style={{ marginRight: "5px" }}
             ref={tutorialStep === 5 ? selectedElement : null}
+            disabled={tutorialStep !== 0 && tutorialStep !== 5}
           >
             Fix current answer and 2 character hint (+1 problem to solve)
-          </button>
+          </button>*/}
           <br />
           <br />
           <button
@@ -395,6 +460,7 @@ export default function Level({ spells, setClearedLevel }) {
               }
             }}
             ref={tutorialStep === 9 ? selectedElement : null}
+            disabled={tutorialStep !== 0 && tutorialStep !== 9}
           >
             Click to{" "}
             {showAnswer ? "hide answer" : "show answer (+3 problems to solve)"}
@@ -426,4 +492,3 @@ export default function Level({ spells, setClearedLevel }) {
     </div>
   );
 }
-

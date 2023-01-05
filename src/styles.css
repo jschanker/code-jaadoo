@@ -2,3 +2,15 @@
   font-family: sans-serif;
   text-align: center;
 }
+
+@keyframes buttonBlink {
+  50% {
+    background: gold;
+  }
+}
+
+@keyframes textBlink {
+  50% {
+    background: white;
+  }
+}

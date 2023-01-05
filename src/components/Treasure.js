@@ -10,6 +10,7 @@ export default function Treasure({ spells, setSpells, isOpened, setOpened }) {
   const { level = 0 } = useParams();
   const opened = isOpened(level);
   const [treasureData, setTreasureData] = React.useState(null);
+  const [ranCode, setRanCode] = React.useState(false);
   React.useEffect(() => {
     console.log(`/treasure${level}.json`);
     fetch(`/treasure${level}.json`)
@@ -19,7 +20,7 @@ export default function Treasure({ spells, setSpells, isOpened, setOpened }) {
   // console.log(treasureData);
   return (
     <>
-      <SpellsList spells={spells} />
+      <SpellsList spells={spells} disabled={true} />
       {/*
       <span style={{ backgroundColor: "black", color: "white" }}>
         XP 0 Block inventory
@@ -65,11 +66,22 @@ export default function Treasure({ spells, setSpells, isOpened, setOpened }) {
             <>
               <h3>Output from spell:</h3>
               {/*<pre>{treasureData.output}</pre>*/}
-              <CodeSnippetRunner code={treasureData.usage} />
+              <CodeSnippetRunner
+                code={treasureData.usage}
+                runCallback={() => setRanCode(true)}
+              />
             </>
           )}
           {/*<button onClick={() => setOpened(false)}>print</button>*/}
-          <HashLink to="/map">Go forward</HashLink>
+          <HashLink
+            to="/map"
+            style={{
+              animation: ranCode ? "textBlink 500ms 3" : "",
+              backgroundColor: ranCode ? "gold" : "white"
+            }}
+          >
+            Go forward
+          </HashLink>
         </>
       )}
     </>
