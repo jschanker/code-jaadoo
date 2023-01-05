@@ -3,7 +3,7 @@
   "numToClear": 4,
   "problems": [
     {
-      "description": "Complete the code to greet the user with the message <codeButton>%1</codeButton> stored in the variable <codeButton>%2</codeButton>: \n\n<h3>Code</h3><pre>_________\nprint(%2);</pre>",
+      "description": "Complete the code to greet the user with the message %1 stored in the variable %2: \n\n<h3>Code</h3><pre>_________\nprint(%2);</pre>",
       "questionArgs": [
         [
           "Hi there!",
@@ -15,13 +15,14 @@
         ["wizardGreeting", "wizardMessage", "wizardHi", "wizardSaying"]
       ],
       "answer": "let %2 = \"%1\"",
+      "answerBlocks": ["let ", "%2", " = ", "\"", "%1", "\""],
       "answerArgs": [
         ["%1", "%1", "%1", "%1", "%1"],
         ["%2", "%2", "%2", "%2"]
       ]
     },
     {
-      "description": "Using your variable replacement spell, complete the code to greet the user with the message %1 stored in the variable <codeButton>%2</codeButton>\n\n<h3>Code</h3><pre>let %2 = \"%1\";\n__________</pre>",
+      "description": "Using your variable replacement spell, complete the code to greet the user with the message %1 stored in the variable %2\n\n<h3>Code</h3><pre>let %2 = \"%1\";\n__________</pre>",
       "questionArgs": [
         [
           "Hi there!",
@@ -33,6 +34,7 @@
         ["wizardGreeting", "wizardMessage", "wizardHi", "wizardSaying"]
       ],
       "answer": "print(%2)",
+      "answerBlocks": ["print", "(", "%2", ")", "\"", "\""],
       "answerArgs": [
         ["%1", "%1", "%1", "%1", "%1"],
         ["%2", "%2", "%2", "%2"]

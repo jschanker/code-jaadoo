@@ -2,7 +2,7 @@
   "numToClear": 3,
   "problems": [
     {
-      "description": "Use the input and variable replacement spells to prompt the user for their name with the message <codeButton>%1</codeButton> and store their name in the variable <codeButton>%2</codeButton>:",
+      "description": "Use the input and variable replacement spells to prompt the user for their name with the message %1 and store their name in the variable %2:",
       "questionArgs": [
         [
           "Enter your name wizard:",
@@ -13,6 +13,17 @@
         ["wizardName", "firstName", "awesomeName", "radName"]
       ],
       "answer": "let %2 = prompt(\"%1\")",
+      "answerBlocks": [
+        "let ",
+        "%2",
+        " = ",
+        "prompt",
+        "(",
+        "\"",
+        "%1",
+        "\"",
+        ")"
+      ],
       "answerArgs": [
         ["%1", "%1", "%1", "%1"],
         ["%2", "%2", "%2", "%2"]
