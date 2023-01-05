@@ -5,7 +5,7 @@ import SpellsList from "./SpellsList";
 import _ from "lodash";
 // import ReactFitText from "react-fittext";
 // import AutosizeInput from "react-input-autosize";
-// import AnswerInput from "./AnswerInput";
+import AnswerInput from "./AnswerInput";
 
 const normalizeAnswer = (answer) => answer.replace(/\s\s+/g, " ");
 const repeatCharTimes = (c, times) => Array(times).fill(c).join("");
