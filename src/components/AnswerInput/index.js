@@ -19,6 +19,16 @@ export default function AnswerInput({
     currentAnswerBlockIndices,
     setCurrentAnswerBlockIndices
   ] = React.useState([]);
+  const isAnswerComplete =
+    normalizeAnswer(answer) === normalizeAnswer(currentAnswer);
+  const isAnswerCorrect = normalizeAnswer(answer).startsWith(
+    normalizeAnswer(currentAnswer)
+  );
+  const answerBackgroundColor = isAnswerComplete
+    ? "green"
+    : isAnswerCorrect
+    ? "white"
+    : "red";
 
   const updateUsedAnswerBlocks = (textAnswer) => {
     const newAnswerBlockIndices = [];
@@ -62,7 +72,9 @@ export default function AnswerInput({
       setCurrentAnswer(
         currentAnswerBlockIndices.reduce(
           (codeStr, answerBlockIndex) =>
-            codeStr + answerBlockData[answerBlockIndex].value,
+            answerBlockData[answerBlockIndex].used
+              ? codeStr + answerBlockData[answerBlockIndex].value
+              : codeStr,
           ""
         ) + code
       );
@@ -93,6 +105,7 @@ export default function AnswerInput({
                 //backgroundSize: "contain",
                 backgroundImage: currentStreak >= 3 && "url('/fire.gif')",
                 backgroundSize: "10% 20px",
+                backgroundColor: answerBackgroundColor,
                 //backgroundPosition: "bottom",
                 //backgroundRepeat: "no-repeat",
                 backgroundRepeat: "repeat-x",
@@ -170,7 +183,10 @@ export default function AnswerInput({
         </>
       ) : (
         <>
-          <div id="answerBlock" style={{ position: "relative" }}>
+          <div
+            id="answerBlock"
+            //style={{ position: "relative", backgroundColor: "blue" }}
+          >
             <label>
               <textarea
                 id="answer"
@@ -185,6 +201,8 @@ export default function AnswerInput({
                 }
                 style={{
                   maxWidth: "95%",
+                  visibility: "hidden",
+                  display: "none",
                   color: "white",
                   width: document
                     .getElementById("blockAnswerDiv")
@@ -238,17 +256,54 @@ export default function AnswerInput({
             </label>
             <div
               style={{
-                position: "absolute",
+                //position: "absolute",
                 top: "50%",
                 left: "50%",
                 width: "95%",
-                transform: "translate(-50%, -50%)"
+                //transform: "translate(-50%, -50%)",
+                backgroundColor: answerBackgroundColor,
+                border: "2px solid black",
+                /*width: document
+                  .getElementById("blockAnswerDiv")
+                  ?.getBoundingClientRect().width,
+                height: document
+                  .getElementById("blockAnswerDiv")
+                  ?.getBoundingClientRect().height,*/
+                //background:
+                //  "url('https://upload.wikimedia.org/wikipedia/commons/3/36/Fire-animation.gif')",
+                //backgroundSize: "contain",
+                backgroundImage: currentStreak >= 3 && "url('/fire.gif')",
+                backgroundSize: "10% 20px",
+                //backgroundPosition: "bottom",
+                //backgroundRepeat: "no-repeat",
+                backgroundRepeat: "repeat-x",
+                backgroundPosition: "100% 100%",
+                //backgroundRepeat: "no-repeat",
+                fontSize: "xx-large",
+                fontWeight: "bold",
+                //color: "green",
+                padding: "20px 5px",
+                fontFamily: "courier, monospace",
+                borderRadius: "10px"
               }}
               id="block-answer-div"
+              onClick={() => {
+                setIsTextMode(true);
+                setTimeout(() => {
+                  const answerInput = document.getElementById("answer");
+                  answerInput.setSelectionRange(answer.length, answer.length);
+                  // Adapted from https://stackoverflow.com/a/48460773
+                  //   - 40 is for 20px top/bottom padding
+                  answerInput.style.height = "";
+                  answerInput.style.height =
+                    answerInput.scrollHeight - 40 + "px";
+                }, 0);
+              }}
             >
               {currentAnswerBlockIndices.map((indexInAllBlocks, index) => (
                 <button
                   onClick={(e) => {
+                    console.log(currentAnswer, answer);
                     console.log(currentAnswerBlockIndices);
                     setIsTextMode(false);
                     answerBlockData[indexInAllBlocks].used = false;
@@ -258,15 +313,21 @@ export default function AnswerInput({
                         .concat(currentAnswerBlockIndices.slice(index + 1))
                     );
                     handleCodeButtonClick(
-                      answerBlockData[indexInAllBlocks].value,
+                      //answerBlockData[indexInAllBlocks].value,
+                      "",
                       e.target
                     );
                     //e.target.disabled = true;
                   }}
-                  style={{ fontFamily: "monospace", fontSize: "xx-large" }}
-                  disabled={!answerBlockData[indexInAllBlocks].used}
+                  style={{
+                    fontFamily: "monospace",
+                    fontSize: "xx-large",
+                    maxWidth: "95%",
+                    overflow: "auto"
+                  }}
+                  disabled={!answerBlockData[indexInAllBlocks]?.used}
                 >
-                  {answerBlockData[indexInAllBlocks].value}
+                  {answerBlockData[indexInAllBlocks]?.value}
                 </button>
               ))}
             </div>

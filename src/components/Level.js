@@ -84,6 +84,9 @@ export default function Level({ spells, setClearedLevel }) {
     const questionNumber = Math.floor(
       Math.random() * problemData.problems.length
     );
+    const problemInfo = problemData.problems[questionNumber];
+    const questionArgs = problemInfo.questionArgs;
+    const answerArgs = problemInfo.answerArgs;
     const questionArgIndices = problemData.problems[
       questionNumber
     ].questionArgs.map((arr) => Math.floor(Math.random() * arr.length));
@@ -91,7 +94,7 @@ export default function Level({ spells, setClearedLevel }) {
     setProblemNumber(questionNumber);
     setQuestionArgIndices(questionArgIndices);
     setAnswerBlockData(
-      _.shuffle(problemInfo?.answerBlocks || []).map(
+      _.shuffle(problemData.problems[questionNumber].answerBlocks || []).map(
         (answerBlockItem, used) => {
           return {
             value: answerBlockItem
