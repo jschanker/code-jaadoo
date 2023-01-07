@@ -272,7 +272,7 @@ export default function Level({ spells, setClearedLevel }) {
   }, [currentAnswerNormal, expectedAnswerNormal, tutorialStep]);
 
   return (
-    <div style={{ marginTop: "-55px", marginBottom: "20px" }}>
+    <div style={{ marginTop: "10px", marginBottom: "20px" }}>
       {/*<div style={{ marginTop: "45px" }}>*/}
       {/*
       <SpellsList

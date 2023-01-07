@@ -28,7 +28,7 @@ export default function Treasure({ spells, setSpells, isOpened, setOpened }) {
       */}
       {!opened ? (
         <>
-          <h1>{treasureData?.closedHeading}</h1>
+          <h1 style={{ marginTop: "65px" }}>{treasureData?.closedHeading}</h1>
           <img
             src={closedTreasureChest}
             style={{ width: "200px", height: "auto" }}
@@ -47,7 +47,7 @@ export default function Treasure({ spells, setSpells, isOpened, setOpened }) {
       ) : (
         <>
           {/*<p>You can use this spell to output text to the screen.</p>*/}
-          <h1>{treasureData?.openedHeading}</h1>
+          <h1 style={{ marginTop: "65px" }}>{treasureData?.openedHeading}</h1>
           <p>
             <img
               src={openTreasureChestGold}
@@ -73,15 +73,27 @@ export default function Treasure({ spells, setSpells, isOpened, setOpened }) {
             </>
           )}
           {/*<button onClick={() => setOpened(false)}>print</button>*/}
-          <HashLink
-            to="/map"
+          <div style={{ marginBottom: "35px" }} />
+          <div
             style={{
-              animation: ranCode ? "textBlink 500ms 3" : "",
-              backgroundColor: ranCode ? "gold" : "white"
+              position: "fixed",
+              bottom: 0,
+              left: 0,
+              width: "100%",
+              backgroundColor: "#ccc",
+              padding: "5px"
             }}
           >
-            Go forward
-          </HashLink>
+            <HashLink
+              to="/map"
+              style={{
+                animation: ranCode ? "textBlink 500ms 3" : "",
+                backgroundColor: ranCode ? "gold" : "white"
+              }}
+            >
+              Go forward
+            </HashLink>
+          </div>
         </>
       )}
     </>

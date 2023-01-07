@@ -12,14 +12,13 @@ export default function LevelMap({ currentLevel, levels, spells }) {
   const isLevelAccessible = (level) => level.index <= currentLevel;
   return (
     <div
-      style={
-        {
-          /*display: "grid",
+      style={{
+        /*display: "grid",
         gridTemplateColumns: "100px 100px 100px",
         alignItems: "center",
         justifyContent: "center"*/
-        }
-      }
+        marginTop: "65px"
+      }}
       onClick={() => setSelectedLevel(null)}
     >
       <SpellsList spells={spells || ["print"]} />
