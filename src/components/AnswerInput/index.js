@@ -317,11 +317,12 @@ export default function AnswerInput({
                       "",
                       e.target
                     );
+                    e.stopPropagation();
                     //e.target.disabled = true;
                   }}
                   style={{
                     fontFamily: "monospace",
-                    fontSize: "xx-large",
+                    fontSize: "large",
                     maxWidth: "95%",
                     overflow: "auto"
                   }}

@@ -6,6 +6,7 @@ import _ from "lodash";
 // import ReactFitText from "react-fittext";
 // import AutosizeInput from "react-input-autosize";
 import AnswerInput from "./AnswerInput";
+import LevelProgress from "./LevelProgress";
 
 const normalizeAnswer = (answer) => answer.replace(/\s\s+/g, " ");
 const repeatCharTimes = (c, times) => Array(times).fill(c).join("");
@@ -30,7 +31,7 @@ export default function Level({ spells, setClearedLevel }) {
       {
         description: "Loading...",
         questionArgs: [],
-        answer: "",
+        answer: "-",
         answerArgs: []
       }
     ]
@@ -96,6 +97,7 @@ export default function Level({ spells, setClearedLevel }) {
     setAnswerBlockData(
       _.shuffle(problemData.problems[questionNumber].answerBlocks || []).map(
         (answerBlockItem, used) => {
+          // alert(answerBlockItem)
           return {
             value: answerBlockItem
               .replace(
@@ -124,6 +126,10 @@ export default function Level({ spells, setClearedLevel }) {
     setIsCorrect(false);
     setShowAnswer(false);
   }, [problemData, isCorrect]);
+
+  /*React.useEffect(() => {
+
+  }, [problemNumber, questionArgIndices])*/
 
   const problemInfo = problemData.problems[problemNumber];
   const questionArgs = problemInfo.questionArgs;
@@ -266,7 +272,8 @@ export default function Level({ spells, setClearedLevel }) {
   }, [currentAnswerNormal, expectedAnswerNormal, tutorialStep]);
 
   return (
-    <div style={{ marginTop: "45px" }}>
+    <div style={{ marginTop: "-55px", marginBottom: "20px" }}>
+      {/*<div style={{ marginTop: "45px" }}>*/}
       {/*
       <SpellsList
         spells={spells}
@@ -333,10 +340,17 @@ export default function Level({ spells, setClearedLevel }) {
       )}
       {numRemaining > 0 ? (
         <>
-          <h2>Number of Questions Remaining to Level Up: {numRemaining}</h2>
-          {description}
+          {/*<h2>Number of Questions Remaining to Level Up: {numRemaining}</h2>*/}
+          <LevelProgress
+            totalQuestions={Math.max(
+              numRemaining,
+              problemData?.numToClear || 5
+            )}
+            numRemaining={numRemaining}
+          />
+          <div style={{ fontSize: "large" }}>{description}</div>
           <label style={{ display: "none" }}>
-            <h3>Answer:&nbsp;</h3>
+            {/*<h3>Answer:&nbsp;</h3>*/}
             <textarea
               id="answerOld"
               readOnly={tutorialStep !== 0}
@@ -402,8 +416,8 @@ export default function Level({ spells, setClearedLevel }) {
               autoFocus
             />
           </label>
-          <br />
-          <br />
+          {/*<br />
+          <br />*/}
           <AnswerInput
             startInTextMode={false}
             tutorialStep={tutorialStep}
@@ -453,38 +467,49 @@ export default function Level({ spells, setClearedLevel }) {
           </button>*/}
           <br />
           <br />
-          <button
-            onClick={() => {
-              setShowAnswer(!showAnswer);
-              setGotHint(true);
-              if (!gotHint) {
-                setNumRemaining(numRemaining + 3);
-                setCurrentStreak(0);
-              }
+          <div
+            style={{
+              position: "fixed",
+              left: 0,
+              bottom: 0,
+              width: "100%",
+              borderTop: "1px solid grey",
+              background: "#ccc"
             }}
-            ref={tutorialStep === 9 ? selectedElement : null}
-            disabled={tutorialStep !== 0 && tutorialStep !== 9}
           >
-            Click to{" "}
-            {showAnswer ? "hide answer" : "show answer (+3 problems to solve)"}
-          </button>
-          <div style={{ display: showAnswer ? "block" : "none" }}>
-            {expectedAnswer}
-          </div>
-          <br />
-          <br />
-          <p>
-            <HashLink
-              to="/map"
-              onClick={(e) =>
-                window.confirm(
-                  "Are you sure? If you return to the map, you'll need to start this level from the beginning."
-                ) || e.preventDefault()
-              }
+            <button
+              onClick={() => {
+                setShowAnswer(!showAnswer);
+                setGotHint(true);
+                if (!gotHint) {
+                  setNumRemaining(
+                    Math.min(numRemaining + 3, problemData?.numToClear + 1 || 5)
+                  );
+                  setCurrentStreak(0);
+                }
+              }}
+              ref={tutorialStep === 9 ? selectedElement : null}
+              disabled={tutorialStep !== 0 && tutorialStep !== 9}
             >
-              Quit, and go back to the level map!
-            </HashLink>
-          </p>
+              {/*Click to{" "}*/}
+              {showAnswer ? "Hide answer" : "Show answer (-3 progress)"}
+            </button>
+            <div style={{ display: showAnswer ? "block" : "none" }}>
+              {expectedAnswer}
+            </div>
+            <p>
+              <HashLink
+                to="/map"
+                onClick={(e) =>
+                  window.confirm(
+                    "Are you sure? If you return to the map, you'll need to start this level from the beginning."
+                  ) || e.preventDefault()
+                }
+              >
+                Quit, and go back to the level map!
+              </HashLink>
+            </p>
+          </div>
         </>
       ) : (
         <>
@@ -495,3 +520,4 @@ export default function Level({ spells, setClearedLevel }) {
     </div>
   );
 }
+
