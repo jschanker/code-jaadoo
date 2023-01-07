@@ -3,7 +3,7 @@
   "numToClear": 3,
   "problems": [
     {
-      "description": "Greet the user with the following message: %1",
+      "description": "Enter the code to greet the user with the following message: \"%1\"",
       "questionArgs": [
         [
           "Hi there!",
