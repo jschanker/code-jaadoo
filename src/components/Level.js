@@ -187,7 +187,13 @@ export default function Level({ spells, setClearedLevel }) {
         )
     )
     .split(/<pre>|<\/pre>/g)
-    .map((item, index) => (index % 2 === 0 ? item : <pre>{item}</pre>))
+    .map((item, index) =>
+      index % 2 === 0 ? (
+        item
+      ) : (
+        <pre style={{ whiteSpace: "pre-wrap" }}>{item}</pre>
+      )
+    )
     .map((item, index) =>
       typeof item === "string"
         ? item
