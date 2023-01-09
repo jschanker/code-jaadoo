@@ -2,7 +2,7 @@
   "numToClear": 3,
   "problems": [
     {
-      "description": "Use the print and join text spells to display the result of joining the greeting %1 and the name referred to by %2 without using %3 in your answer: <pre>let %2 = \"%3\";<pre>\n_______________________________</pre>",
+      "description": "Complete the code to display the result of joining \"%1\" and the name referred to by the variable %2. Do this without using %3 in your answer: <pre>let %2 = \"%3\";\n_______________________________</pre>",
       "questionArgs": [
         ["Hi ", "Hey ", "Welcome ", "Yo "],
         ["wizardName", "firstName", "awesomeName", "radName"],

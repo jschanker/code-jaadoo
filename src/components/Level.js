@@ -121,7 +121,7 @@ export default function Level({ spells, setClearedLevel }) {
       setNumRemaining(numRemaining - 1);
       setGotHint(false);
     } else if (numRemaining === 0) {
-      setClearedLevel();
+      setClearedLevel(level);
     }
     setIsCorrect(false);
     setShowAnswer(false);
@@ -526,4 +526,3 @@ export default function Level({ spells, setClearedLevel }) {
     </div>
   );
 }
-

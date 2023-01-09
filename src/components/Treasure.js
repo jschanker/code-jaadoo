@@ -35,7 +35,7 @@ export default function Treasure({ spells, setSpells, isOpened, setOpened }) {
             alt="treasure"
             onClick={(e) => {
               if (treasureData) {
-                setOpened(true);
+                setOpened(level);
                 if (!spells.includes(treasureData?.treasure)) {
                   setSpells(spells.concat(treasureData?.treasure));
                 }

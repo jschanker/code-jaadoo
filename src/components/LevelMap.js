@@ -5,6 +5,7 @@ import lock from "../assets/lock.png";
 import wizard from "../assets/wizard-walking-forward.gif";
 import { HashLink } from "react-router-hash-link";
 import SpellsList from "./SpellsList";
+
 export default function LevelMap({ currentLevel, levels, spells }) {
   const completedLevels = levels?.slice(0, currentLevel) || [];
   const remainingLevels = levels?.slice(currentLevel) || [];
@@ -21,7 +22,7 @@ export default function LevelMap({ currentLevel, levels, spells }) {
       }}
       onClick={() => setSelectedLevel(null)}
     >
-      <SpellsList spells={spells || ["print"]} />
+      <SpellsList spells={spells || ["print"]} disabled />
       {selectedLevel != null ? (
         isLevelAccessible(selectedLevel) ? (
           <div

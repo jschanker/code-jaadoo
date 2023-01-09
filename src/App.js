@@ -46,10 +46,16 @@ export default function App() {
     localStorage.setItem("spells", JSON.stringify(spells));
   }, [spells]);
 
-  function setClearedLevel() {
-    console.log("CL", currentLevel);
-    localStorage.setItem("currentLevel", currentLevel + 1);
-    setLevel(currentLevel + 1);
+  function setClearedLevel(type, num) {
+    console.log("Cleared level", currentLevel, type, num);
+    const index = levels.findIndex(
+      (level) =>
+        level.type === type && parseFloat(level.num) === parseFloat(num)
+    );
+    if (index >= currentLevel) {
+      localStorage.setItem("currentLevel", currentLevel + 1);
+      setLevel(currentLevel + 1);
+    }
   }
 
   return (
@@ -71,7 +77,7 @@ export default function App() {
                 spells={spells}
                 setSpells={setSpells}
                 isOpened={isOpened}
-                setOpened={setClearedLevel}
+                setOpened={setClearedLevel.bind(null, "treasure")}
               />
             }
           />
@@ -83,7 +89,7 @@ export default function App() {
                 spells={spells}
                 setSpells={setSpells}
                 isOpened={isOpened}
-                setOpened={setClearedLevel}
+                setOpened={setClearedLevel.bind(null, "treasure")}
               />
             }
           />
@@ -102,7 +108,10 @@ export default function App() {
             path="/level/:level"
             exact
             element={
-              <Level spells={spells} setClearedLevel={setClearedLevel} />
+              <Level
+                spells={spells}
+                setClearedLevel={setClearedLevel.bind(null, "level")}
+              />
             }
           />
           <Route
@@ -113,7 +122,7 @@ export default function App() {
                 spells={spells}
                 setSpells={setSpells}
                 isOpened={isOpened}
-                setOpened={setClearedLevel}
+                setOpened={setClearedLevel.bind(null, "treasure")}
               />
             }
           />
