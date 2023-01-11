@@ -173,6 +173,19 @@ export default function Level({ spells, setClearedLevel }) {
       setCurrentAnswer(currentAnswer + '")');
     }
   };
+
+  console.log("PROBLEM INFO", problemInfo, questionArgs[1], questionArgIndices);
+  const feedbackInfo =
+    problemInfo.answerFeedback?.map((feedbackItem) => ({
+      test: feedbackItem.test.replace(
+        /%([0-9]+)/g,
+        (_, a) => questionArgs[a - 1][questionArgIndices[a - 1]]
+      ),
+      feedback: feedbackItem.feedback.replace(
+        /%([0-9]+)/g,
+        (_, a) => questionArgs[a - 1][questionArgIndices[a - 1]]
+      )
+    })) || [];
   const description = problemInfo.description
     .replace(
       /%([0-9]+)/g,
@@ -434,6 +447,7 @@ export default function Level({ spells, setClearedLevel }) {
             setCurrentAnswer={setCurrentAnswer}
             answer={expectedAnswer}
             handleCodeButtonClick={handleCodeButtonClick}
+            feedbackInfo={feedbackInfo}
           />
           {/*<div style={{ display: "flex", justifyContent: "space-around" }}>
             {answerBlockData.map((item) => (

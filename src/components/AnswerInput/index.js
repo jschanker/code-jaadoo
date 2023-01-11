@@ -1,4 +1,5 @@
 import React from "react";
+// import "./styles.css";
 
 const normalizeAnswer = (answer) => answer.replace(/\s\s+/g, " ");
 const repeatCharTimes = (c, times) => Array(times).fill(c).join("");
@@ -12,7 +13,8 @@ export default function AnswerInput({
   currentStreak,
   setCurrentAnswer,
   // handleCodeButtonClick,
-  answer
+  answer,
+  feedbackInfo
 }) {
   const [isTextMode, setIsTextMode] = React.useState(!!startInTextMode);
   const [
@@ -79,6 +81,20 @@ export default function AnswerInput({
         ) + code
       );
     }
+  };
+
+  const AnswerFeedback = () => {
+    return (
+      <div
+        id="answerFeedback"
+        style={{ color: isAnswerCorrect ? "black" : "red" }}
+      >
+        {
+          feedbackInfo.find((x) => new RegExp(x.test).test(currentAnswer))
+            ?.feedback
+        }
+      </div>
+    );
   };
 
   return (
@@ -180,6 +196,7 @@ export default function AnswerInput({
               autoFocus
             />
           </label>
+          <AnswerFeedback />
         </>
       ) : (
         <>
@@ -332,6 +349,7 @@ export default function AnswerInput({
                 </button>
               ))}
             </div>
+            <AnswerFeedback />
           </div>
           <br />
           <br />

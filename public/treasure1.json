@@ -1,6 +1,6 @@
 {
   "type": "treasure",
-  "description": "You can use this spell to refer to a value by some name of your choosing.",
+  "description": "You can use this spell to refer to a value by some name of your choosing. Since we can't use spaces in variable names in JavaScript, it is customary to capitalize the first letter of every word after the first. We also do NOT use quotes around the name of a variable if we want it to be replaced by its value.",
   "openedHeading": "The Variable Replacement Spell",
   "closedHeading": "Continue your journey with your next spell!",
   "treasure": "let ",

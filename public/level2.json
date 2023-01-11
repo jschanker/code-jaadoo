@@ -19,6 +19,32 @@
       "answerArgs": [
         ["%1", "%1", "%1", "%1", "%1"],
         ["%2", "%2", "%2", "%2"]
+      ],
+      "answerFeedback": [
+        {
+          "test": "^%2",
+          "feedback": "If you're assigning a variable, use let first."
+        },
+        {
+          "test": "^let[^\\s]",
+          "feedback": "Make sure you have a space after let."
+        },
+        {
+          "test": "^let\\s+%1",
+          "feedback": "The name of the variable you're assigning should appear before the equal sign."
+        },
+        {
+          "test": "^let\\s+%2\\s*[^\\s=]",
+          "feedback": "When assigning a variable, use an equal sign after its name and before the value you want it to be replaced with."
+        },
+        {
+          "test": "^let\\s+%2\\s*=\\s*[^\\s\"']",
+          "feedback": "The text that you're assigning to %2 should be placed in quotes, so it's not confused for another variable name."
+        },
+        {
+          "test": "^let\\s+%2\\s*=\\s*[\"']%1[^\"']",
+          "feedback": "Remember to include a closing quotation mark to enclose the text %1."
+        }
       ]
     },
     {
@@ -38,6 +64,28 @@
       "answerArgs": [
         ["%1", "%1", "%1", "%1", "%1"],
         ["%2", "%2", "%2", "%2"]
+      ],
+      "answerFeedback": [
+        {
+          "test": "^(pi|pr[^i]|pn|pri[^n]|prin[^t])",
+          "feedback": "Check your spelling of print."
+        },
+        {
+          "test": "^%2",
+          "feedback": "Use print at the start of your answer to tell the computer to display the value of this variable."
+        },
+        {
+          "test": "^print\\s*[^\\s\\(]",
+          "feedback": "You're missing an open parenthesis after print."
+        },
+        {
+          "test": "^print\\s*\\(\\s*[\"']",
+          "feedback": "Placing %2 in quotes means that %2 will be displayed instead of its value, \"%1\""
+        },
+        {
+          "test": "^print\\s*\\(%2\\s*[^\\s)]",
+          "feedback": "Nothing else should be printed, just the value of %2. So, use a closing parenthesis at the end to enclose what should be printed."
+        }
       ]
     }
   ]
