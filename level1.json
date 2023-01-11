@@ -15,7 +15,37 @@
       ],
       "answer": "print(\"%1\")",
       "answerBlocks": ["print", "(", "\"", "%1", "\"", ")"],
-      "answerArgs": [["%1", "%1", "%1", "%1", "%1"]]
+      "answerArgs": [["%1", "%1", "%1", "%1", "%1"]],
+      "answerFeedback": [
+        {
+          "test": "^(pi|pr[^i]|pn|pri[^n]|prin[^t])",
+          "feedback": "Check your spelling of print."
+        },
+        {
+          "test": "^%1",
+          "feedback": "Use print at the start of your answer to tell the computer to display the text to the screen."
+        },
+        {
+          "test": "^print\\s*[^\\s\\(]",
+          "feedback": "You're missing an open parenthesis after print."
+        },
+        {
+          "test": "^print\\s*\\(\\s*[^\"']",
+          "feedback": "You need to surround the message with quotation marks, so the computer displays the text as is instead of trying to figure out what it means."
+        },
+        {
+          "test": "^print\\s*\\(\\s*[\"']%1\\s*\\)",
+          "feedback": "Make sure you add quotation marks before the closing parenthesis."
+        },
+        {
+          "test": "^print\\s*\\(\\s*[\"']%1[^\"'\\)]",
+          "feedback": "Nothing else should be printed, just %1. So, use a closing quotation mark to enclose the message to be displayed to the user."
+        },
+        {
+          "test": "^print\\s*\\(\\s*[\"']%1\\s*[\"']\\s*[^\\s\\)]",
+          "feedback": "Nothing else should be printed, just %1. So, use a closing parenthesis at the end to enclose what should be printed."
+        }
+      ]
     }
   ]
 }
