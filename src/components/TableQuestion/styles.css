@@ -1,0 +1,12 @@
+table.table-answer {
+  border: 1px solid black;
+  font-family: courier, monospace;
+  font-size: large;
+  border-collapse: collapse;
+}
+
+.table-answer td,
+.table-answer th {
+  border: 1px solid black;
+  padding: 2px 10px;
+}
