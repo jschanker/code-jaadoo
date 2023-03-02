@@ -1,0 +1,135 @@
+{
+  "type": "first",
+  "problems": [
+    {
+      "description": "Fill in the blank to have the below function output the smallest integer divisible by 5 that's %1 and %2: <pre>const f = %3 => ___.find(t => t % 5 === 0);</pre>",
+      "questionArgs": [
+        [
+          "positive",
+          "not negative",
+          "greater than -3",
+          "greater than 7",
+          "greater than or equal to 5",
+          "greater than or equal to the input",
+          "greater than the integer input"
+        ],
+        [
+          "less than twice the input",
+          "less than or equal to twice the input",
+          "less than 50",
+          "less than or equal to 100"
+        ],
+        ["c", "d", "j", "m", "n"]
+      ],
+      "answer": "range(%1, %2)",
+      "answerBlocks": [
+        "range",
+        "(",
+        " * ",
+        " + ",
+        "1",
+        "50",
+        "101",
+        ", ",
+        "f",
+        "%1",
+        "2",
+        "100",
+        "%3",
+        "t",
+        ")"
+      ],
+      "answerArgs": [
+        [1, 0, -2, 8, 5, "%3", "%3 + 1"],
+        ["2 * %3", "2 * %3 + 1", "50", "101"],
+        ["%3", "%3", "%3", "%3", "%3"]
+      ]
+    },
+    {
+      "description": "Fill in the blank to have the below function output the *index* of the first positive integer in the list %1 %2 %3: <pre>const firstPositive = (%1, startPos, endPos) => ___.find(index => %1[index] > 0);</pre>",
+      "questionArgs": [
+        ["numList", "itemList", "arr"],
+        [
+          "at or after startPos",
+          "after startPos",
+          "from the beginning (ignoring the input startPos)"
+        ],
+        [
+          "and before endPos",
+          "up to and including endPos",
+          "to the end (ignoring the input endPos)"
+        ]
+      ],
+      "answer": "range(%2, %3)",
+      "answerBlocks": [
+        "range",
+        "(",
+        " * ",
+        " + ",
+        "1",
+        ", ",
+        "firstPositive",
+        "%1",
+        ".length",
+        "0",
+        "startPos",
+        "endPos",
+        "index",
+        ")"
+      ],
+      "answerArgs": [
+        ["numList", "itemList", "arr"],
+        ["startPos", "startPos + 1", 0],
+        ["endPos", "endPos + 1", "%1.length"]
+      ]
+    },
+    {
+      "description": "Fill in the blank to have the below function output the smallest integer greater than or equal to %1 and less than %1 + 100, whose %2 is %3 the input %4. We'll assume that such an integer exists. Use the appropriate function from Math.cos, Math.sin and Math.tan: <pre>const %6 = (%1, %4) => range(%1, %1 + 100).find(%5 => ___);</pre>",
+      "questionArgs": [
+        ["s", "S", "startNum"],
+        ["cosine", "sine", "tangent"],
+        [
+          "less than",
+          "greater than",
+          "less than or equal to",
+          "greater than or equal to"
+        ],
+        ["num", "c", "d", "j", "m"],
+        ["item", "t"],
+        ["smallestTrig", "sTrig"]
+      ],
+      "answer": "Math.%2(%5) %3 %4",
+      "answerArgs": [
+        ["%1", "%1", "%1"],
+        ["cos", "sin", "tan"],
+        ["<", ">", "<=", ">="],
+        ["%4", "%4", "%4", "%4", "%4"],
+        ["%5", "%5"]
+      ]
+    },
+    {
+      "description": "Fill in the blank to have the below function output the *index* of the first item in the list %1 whose %2 is %3 the input %4. We'll assume that such an integer exists. Use the appropriate function from Math.cos, Math.sin and Math.tan: <pre>const %6 = (%1, %4) => range(%1, %1.length).find(%5 => ___);</pre>",
+      "questionArgs": [
+        ["arr", "numList", "itemList"],
+        ["cosine", "sine", "tangent"],
+        [
+          "less than",
+          "greater than",
+          "less than or equal to",
+          "greater than or equal to"
+        ],
+        ["num", "c", "d", "m"],
+        ["index", "i", "j"],
+        ["smallestTrig", "s"]
+      ],
+      "answer": "Math.%2(%5) %3 %4",
+      "answerArgs": [
+        ["%1", "%1", "%1"],
+        ["cos", "sin", "tan"],
+        ["<", ">", "<=", ">="],
+        ["%4", "%4", "%4", "%4", "%4"],
+        ["%1[%5]", "%1[%5]", "%1[%5]"]
+      ]
+    }
+  ]
+}

@@ -6,9 +6,12 @@ import LevelMap from "./components/LevelMap";
 import Level from "./components/Level";
 import Treasure from "./components/Treasure";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+// import { useSearchParams } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 
 export default function App() {
+  // const [searchParams] = useSearchParams();
+  // console.log(searchParams.get('level'));
   const isOpened = (index) => {
     return (
       levels.findIndex(
@@ -34,9 +37,9 @@ export default function App() {
       { type: "level", num: 4 },
       { type: "treasure", num: 4 },
       { type: "level", num: 5 },
-      { type: "treasure", num: 5 }
-      /*{ type: "level", num: 6 },
-      { type: "treasure", num: 6 },
+      { type: "treasure", num: 5 },
+      { type: "level", num: 6 }
+      /*{ type: "treasure", num: 6 },
       { type: "level", num: 7 },
       { type: "treasure", num: 7 }*/
     ].map((item, index) => ({ ...item, index }))
@@ -45,6 +48,14 @@ export default function App() {
   React.useEffect(() => {
     localStorage.setItem("spells", JSON.stringify(spells));
   }, [spells]);
+
+  React.useEffect(() => {
+    const level = 
+      parseInt(new URLSearchParams(document.location.search).get('level'));
+    if (level >= 0 && level < levels.length) {
+      setLevel(level);
+    }
+  }, [])
 
   function setClearedLevel(type, num) {
     console.log("Cleared level", currentLevel, type, num);
